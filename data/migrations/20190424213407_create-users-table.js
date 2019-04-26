@@ -24,7 +24,7 @@ exports.up = function(knex) {
     s.string('subcat_name', 20)
       .notNullable()
       .unique();
-    s.int('cat_id')
+    s.integer('cat_id')
       .unsigned()
       .notNullable()
       .references('id') //creating reference to category name
@@ -38,12 +38,12 @@ exports.up = function(knex) {
       .notNullable()
       .references('id') //creating reference to user's id
       .inTable('users')
-    t.int('cat_id')
+    t.integer('cat_id')
       .unsigned()
       .notNullable()
       .references('id')
       .inTable('category')
-    t.int('sub_id', 20)
+    t.integer('sub_id', 20)
       .unsigned()
       .notNullable()
       .references('id')
@@ -51,7 +51,7 @@ exports.up = function(knex) {
   })
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function(knex) {
     return knex.schema
       .dropTableIfExists('users')
       .dropTableIfExists('category')
