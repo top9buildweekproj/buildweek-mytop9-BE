@@ -1,5 +1,5 @@
 
-exports.up = function(knex, Promise) {
+exports.up = function(knex) {
   return knex.schema
 
   .createTable('users', u => {
@@ -15,8 +15,8 @@ exports.up = function(knex, Promise) {
   .createTable('category', c => {
     c.increments();
     c.string('category_name', 20)
-    .notNullable()
-    .unique();
+    .unique()
+    .notNullable();
   })
 
   .createTable('subcategory', s => {
@@ -24,29 +24,37 @@ exports.up = function(knex, Promise) {
     s.string('subcat_name', 20)
       .notNullable()
       .unique();
-    s.string('cat_name', 20)
+    s.int('cat_id')
+      .unsigned()
       .notNullable()
-      .references('category_name') //creating reference to category name
+      .references('id') //creating reference to category name
       .inTable('category');
   })
 
   .createTable('top_list', t => {
     t.increments();
     t.integer('user_id')
+      .unsigned()
       .notNullable()
       .references('id') //creating reference to user's id
       .inTable('users')
-    t.string('cat_name', 20)
+    t.int('cat_id')
+      .unsigned()
       .notNullable()
-      .references('category_name')
+      .references('id')
       .inTable('category')
-    t.string('sub_name', 20)
+    t.int('sub_id', 20)
+      .unsigned()
       .notNullable()
-      .references('subcat_name')
+      .references('id')
       .inTable('subcategory');
   })
 };
 
 exports.down = function(knex, Promise) {
-    return knex.schema.dropTableIfExists('users');
+    return knex.schema
+      .dropTableIfExists('users')
+      .dropTableIfExists('category')
+      .dropTableIfExists('subcategory')
+      .dropTableIfExists('top_list');
 };

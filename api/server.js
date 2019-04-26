@@ -1,6 +1,6 @@
 const express = require('express'); //imports express
-// const cors = require('cors');
-// const helmet = require('helmet');
+const cors = require('cors');
+const helmet = require('helmet');
 
 //router inputs:
 const userRoute = require('../data/users/users-router.js');
@@ -8,9 +8,9 @@ const categoriesRoute = require('../data/categories/categories-router.js');
 
 const server = express(); //creates our express server
 
-// server.use(helmet());
-// server.use(cors());
-// server.use(express.json());
+server.use(helmet());
+server.use(cors());
+server.use(express.json());
 
 server.get('/', (req, res) => {
     res.send('Hello World');
