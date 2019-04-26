@@ -19,6 +19,7 @@ function getById(id) {
         .first();
 }
 
+//get all subcategories of a specific category
 function getSubCategories(catid){
     return db('subcategory as s')
         .join('category as c', 'c.id', 's.cat_id')
