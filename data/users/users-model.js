@@ -14,7 +14,7 @@ function get() {
 
 //get category by id
 function getById(id) {
-    return db('category')
+    return db('users')
         .where({ id })
         .first();
 }
