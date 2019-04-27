@@ -44,6 +44,7 @@ router.get('/users/:id', async(req, res) => {
 })
 
 //adds user and returns the id for the user
+//tests to make sure there is a username and a password before trying to insert
 router.post('/', async(req, res) => {
     if(!req.body.username) {
         res.status(500).json('you didn\'t give me a username')
@@ -62,25 +63,29 @@ router.post('/', async(req, res) => {
     }
 })
 
-// router.post('/users/:id', async ( req,res ) => {
-//     try {
-//         const userId = req.params.id;
-    
-//         const list = await db.insert(req.params.id, req.body)
-//         res.status(200).json(list);
-//         // if(req.body) {
-//         //     res.status(200).json(list);
-//         // } else {
-//         //     res.status(500).json({
-//         //         message: 'you didn\'t give me any thing man'
-//         //     })
-//         // }
-//     } catch (e) {
-//         res.status(500).json({
-//             message: 'could not add item to list'
-//         })
-//     }
-    
-// })
+router.post('/users/:id', async ( req, res ) => {
+    //checks to make sure body contains cat_id and sub_id before attempting post
+    if(!req.body.cat_id) {
+        res.status(500).json({
+            message: 'you are missing the cat_id'
+        })
+    }
+    if(!req.body.sub_id) {
+        res.status(500).json({
+            message: 'you are missing the sub_id'
+        })
+    }
+    //pulls id from header and sets it as the user_id for the request body
+    req.body.user_id = req.params.id
+
+    try {
+        const list = await db.addSubcategory(req.params.id, req.body)
+        res.status(200).json(list)
+    } catch (e) {
+        res.status(500).json({
+            error: e.message
+        })
+    }
+})
 
 module.exports = router
