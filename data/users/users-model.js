@@ -3,7 +3,8 @@ const db = require('../dbConfig.js');
 
 module.exports = {
     get,
-    getById
+    getById,
+    getUsersList
 }
 
 //get all
@@ -18,9 +19,18 @@ function getById(id) {
         .first();
 }
 
-function getSubCategories(catid){
-    return db('subcategory as s')
-        .join('category as c', 'c.id', 's.cat_id')
-        .select('s.id', 's.subcat_name', 'c.category_name as Category')
-        .where('s.cat_id', catid);
+function getUsersList(userId){
+    return db('top_list as tl')
+        .join('users as u', 'u.id', 'tl.user_id')
+        .join('subcategory as s', 's.id', 'tl.sub_id')
+        .join('category as c', 'c.id', 'tl.cat_id')
+        .select(
+            'u.id',
+            'u.username',
+            's.id', 
+            's.subcat_name',
+            'c.id', 
+            'c.category_name',
+            )
+        .where('tl.user_id', userId);
 }

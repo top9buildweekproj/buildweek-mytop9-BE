@@ -32,4 +32,15 @@ router.get('/:id', async(req, res) => {
     }
 })
 
+router.get('/users/:id', async(req, res) => {
+    try {
+        const user = await db.getUsersList(req.params.id);
+        res.status(200).json(user);
+    } catch (e) {
+        res.status(500).json({
+            message: 'could not load users'
+        })
+    }
+})
+
 module.exports = router
