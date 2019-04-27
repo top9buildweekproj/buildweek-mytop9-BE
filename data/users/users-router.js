@@ -88,4 +88,15 @@ router.post('/users/:id', async ( req, res ) => {
     }
 })
 
+router.delete('/list/:listid', async(req, res) => {
+    try{
+        const deleted = await db.removeList(req.params.listid)
+        res.status(200).json(deleted)
+    } catch (e) {
+        res.status(500).json({
+            error: e.message
+        })
+    }
+})
+
 module.exports = router
