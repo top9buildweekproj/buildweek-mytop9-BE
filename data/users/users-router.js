@@ -43,6 +43,7 @@ router.get('/users/:id', async(req, res) => {
     }
 })
 
+//adds user and returns the id for the user
 router.post('/', async(req, res) => {
     if(!req.body.username) {
         res.status(500).json('you didn\'t give me a username')
