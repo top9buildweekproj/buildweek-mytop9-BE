@@ -6,7 +6,8 @@ module.exports = {
     getById,
     getUsersList,
     addSubcategory,
-    addUser
+    addUser,
+    removeList
 }
 
 //get all
@@ -21,6 +22,7 @@ function getById(id) {
         .first();
 }
 
+//grabs all top lists associated with the userId and joins categories and subcategories together
 function getUsersList(userId){
     return db('top_list as tl')
         .join('users as u', 'u.id', 'tl.user_id')
@@ -49,7 +51,8 @@ function addSubcategory(userid, changes){
         .insert(changes)
 }
 
-// function removeSubcategory(userid, subcat_id){
-//     return db('top_list')
-//         .where('subcat_id', id)
-// }
+function removeList(list_id){
+    return db('top_list')
+        .where('id', list_id)
+        .del()
+}
