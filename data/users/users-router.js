@@ -43,4 +43,43 @@ router.get('/users/:id', async(req, res) => {
     }
 })
 
+router.post('/', async(req, res) => {
+    if(!req.body.username) {
+        res.status(500).json('you didn\'t give me a username')
+    }
+    if(!req.body.password) {
+        res.status(500).json('you didn\'t give me a password')
+    } else {
+        try {
+            const user = await db.addUser(req.body);
+            res.status(200).json(user) 
+        } catch (e) {
+            res.status(500).json({
+                message: 'unable to add user' , e
+            })
+        }
+    }
+})
+
+// router.post('/users/:id', async ( req,res ) => {
+//     try {
+//         const userId = req.params.id;
+    
+//         const list = await db.insert(req.params.id, req.body)
+//         res.status(200).json(list);
+//         // if(req.body) {
+//         //     res.status(200).json(list);
+//         // } else {
+//         //     res.status(500).json({
+//         //         message: 'you didn\'t give me any thing man'
+//         //     })
+//         // }
+//     } catch (e) {
+//         res.status(500).json({
+//             message: 'could not add item to list'
+//         })
+//     }
+    
+// })
+
 module.exports = router

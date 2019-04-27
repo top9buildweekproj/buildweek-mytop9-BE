@@ -4,7 +4,9 @@ const db = require('../dbConfig.js');
 module.exports = {
     get,
     getById,
-    getUsersList
+    getUsersList,
+    // addSubcategory,
+    addUser
 }
 
 //get all
@@ -25,12 +27,31 @@ function getUsersList(userId){
         .join('subcategory as s', 's.id', 'tl.sub_id')
         .join('category as c', 'c.id', 'tl.cat_id')
         .select(
-            'u.id',
+            'u.id as userId',
             'u.username',
-            's.id', 
+            's.id as subcat_id', 
             's.subcat_name',
-            'c.id', 
+            'c.id as cat_id', 
             'c.category_name',
             )
         .where('tl.user_id', userId);
 }
+
+function addUser(user) {
+    return db('users')
+        .insert(user)
+}
+
+
+
+// function addSubcategory(userid, obj){
+//     return db('top_list')
+//         .where('user_id', userid)
+//         .insert(obj)
+//         .then(([id]) => this.get(id));
+// }
+
+// function removeSubcategory(userid, subcat_id){
+//     return db('top_list')
+//         .where('subcat_id', id)
+// }
