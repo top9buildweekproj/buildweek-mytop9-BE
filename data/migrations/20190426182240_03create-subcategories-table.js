@@ -14,6 +14,9 @@ exports.up = function(knex, Promise) {
           .notNullable()
           .references('id') //creating reference to category name
           .inTable('category');
+
+          s.string('imageUrl')
+            .notNullable();
       })
 };
 

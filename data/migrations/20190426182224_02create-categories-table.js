@@ -8,7 +8,9 @@ exports.up = function(knex, Promise) {
         c.string('category_name', 20)
         .unique()
         .notNullable();
-        
+
+        c.string('imageUrl')
+            .notNullable();
       })
 };
 
