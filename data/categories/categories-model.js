@@ -23,6 +23,6 @@ function getById(id) {
 function getSubCategories(catid){
     return db('subcategory as s')
         .join('category as c', 'c.id', 's.cat_id')
-        .select('s.id', 's.subcat_name', 'c.category_name as Category')
+        .select('s.id', 's.subcat_name', 's.imageUrl', 'c.category_name as Category')
         .where('s.cat_id', catid);
 }
