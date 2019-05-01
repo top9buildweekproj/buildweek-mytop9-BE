@@ -3,6 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 
 //router inputs:
+const authRoute = require('../data/auth/auth-router.js')
 const userRoute = require('../data/users/users-router.js');
 const categoriesRoute = require('../data/categories/categories-router.js');
 
@@ -17,6 +18,7 @@ server.get('/', (req, res) => {
 });
 
 //config routes here:
+server.use('/', authRoute);
 server.use('/users', userRoute);
 server.use('/categories', categoriesRoute);
 

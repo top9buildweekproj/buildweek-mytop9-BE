@@ -7,13 +7,20 @@ module.exports = {
     getUsersList,
     addSubcategory,
     addUser,
-    removeList
+    removeList,
+    getBy
 }
 
 //get all
 function get() {
     return db('users');
 }
+
+function getBy(filter) {
+    return db('users')
+        .where(filter)
+        .first();
+  }
 
 //get category by id
 function getById(id) {

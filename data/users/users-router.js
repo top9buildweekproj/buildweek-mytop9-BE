@@ -1,8 +1,11 @@
 const express = require('express'); //requiring express
 const db = require('./users-model.js'); //requiring our database query function model
 const router = express.Router(); //creating our Router
+const bcrypt = require('bcryptjs');
+const { authenticate, genAToken } = require('../auth/authMW.js');
 
-router.use(express.json()); //telling our router to use express and allow it to send/receive json strings/format
+//telling our router to use express and allow it to send/receive json strings/format
+router.use(express.json()); 
 
 //test get to confirm it is working; 
 //dont have to use /users since we defined this route in server.js '/' is the equivalent of /users
@@ -45,23 +48,32 @@ router.get('/users/:id', async(req, res) => {
 
 //adds user and returns the id for the user
 //tests to make sure there is a username and a password before trying to insert
-router.post('/', async(req, res) => {
-    if(!req.body.username) {
-        res.status(500).json('you didn\'t give me a username')
-    }
-    if(!req.body.password) {
-        res.status(500).json('you didn\'t give me a password')
-    } else {
-        try {
-            const user = await db.addUser(req.body);
-            res.status(200).json(user) 
-        } catch (e) {
-            res.status(500).json({
-                message: 'unable to add user' , e
-            })
-        }
-    }
-})
+// router.post('/', async(req, res) => {
+
+//     if(!req.body.username) {
+//         res.status(500).json('you didn\'t give me a username')
+//     }
+
+//     if(!req.body.password) {
+//         res.status(500).json('you didn\'t give me a password')
+//     } 
+    
+//     else {
+
+//         let user = req.body;
+//         const hash = bcrypt.hashSync(user.password, 10);
+//         user.password = hash;
+
+//         try {
+//             const user = await db.addUser(user);
+//             res.status(201).json(user); 
+//         } catch (e) {
+//             res.status(500).json({
+//                 message: 'unable to add user' , e
+//             })
+//         }
+//     }
+// })
 
 router.post('/users/:id', async ( req, res ) => {
     //checks to make sure body contains cat_id and sub_id before attempting post
