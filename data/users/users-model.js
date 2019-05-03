@@ -41,8 +41,10 @@ function getUsersList(userId){
             'u.username',
             's.id as subcat_id', 
             's.subcat_name',
+            's.imageUrl as subImage',
             'c.id as cat_id', 
             'c.category_name',
+            's.imageUrl as subImage'
             )
         .where('tl.user_id', userId);
 }
