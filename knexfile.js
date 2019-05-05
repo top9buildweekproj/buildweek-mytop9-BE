@@ -24,15 +24,7 @@ module.exports = {
 
   production: {
     client: 'postgresql',
-    connection: {
-      database: 'dd8ltnt8btedjv',
-      user:     'htdulmzyyeyqzm',
-      password: 'f1da2306ae454ef6a843ebc2269c833d3254b43b2fc0758a322a2dbc0513df3f'
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
+    connection: 'postgres://htdulmzyyeyqzm:f1da2306ae454ef6a843ebc2269c833d3254b43b2fc0758a322a2dbc0513df3f@ec2-54-225-116-36.compute-1.amazonaws.com:5432/dd8ltnt8btedjv',
     migrations: {
       directory: './data/migrations',
       tableName: 'knex_migrations',
@@ -40,5 +32,6 @@ module.exports = {
     seeds: {
       directory: './data/seeds',
     },
+    ssl: true
   }
 };
